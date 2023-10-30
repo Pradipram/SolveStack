@@ -1,0 +1,55 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.Home{
+    background: url("./images/img1.jpg");
+    /* height: 100vh; */
+    height: 88.8vh;
+    width: 100vw;
+    background-size: cover;
+}
+
+.Home>div>p{
+    color: rgb(196, 227, 186);
+    font-size: large;
+    text-align: center;
+    margin: 20px;
+    /* background-color: red; */
+}
+
+.Home-content{
+    /* background-color: red; */
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Navbar{
+    background-color: rgb(221, 223, 237);
+    height: 60px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img{
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.Button{
+    padding:10px;
+    background-color: red;
+    margin: 20px;
+}

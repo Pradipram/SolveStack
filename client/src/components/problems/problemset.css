@@ -1,0 +1,46 @@
+.problemset{
+    /* background-color: rebeccapurple; */
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    margin-top: 30px;
+    box-shadow: 0 0px 44px 0 rgb(0 0 0 / 100%);
+    padding-bottom: 20px;
+    /* height: 83vh; */
+}
+
+.table{
+    width: 80%;
+    /* height: 75%; */
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 0px 44px 0 rgb(0 0 0 / 100%);
+}
+
+.addProblem{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin: auto;
+    align-items: center;
+    margin-top: 30px;
+    box-shadow: 0 0px 44px 0 rgb(0 0 0 / 100%);
+    padding: 20px;
+}
+
+.addProblem-form-component{
+    /* background-color: red; */
+    margin: 10px;
+    display: flex;
+}
+
+.addProblem-form-component span{
+    /* background-color: red; */
+    width: 100px;
+}
+
+.error{
+    color: red;
+    font-size: 0.9rem;
+}
