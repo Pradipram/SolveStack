@@ -65,10 +65,10 @@ export const UpdateProblem = async(req,res) =>{
         // console.log("coming in UpdateProblem");
         console.log(req.body);
         // const res = Problem.findOneAndUpdate(req.body._d,{status:req.body.status});
-        const res = Problem.findByIdAndUpdate(req.body._id,{status:req.body.status});
-        res.status(200).json(res);
+        const updatedProblem = await Problem.findByIdAndUpdate(req.body._id,{status:req.body.status},{new:true}).exec();
+        res.status(200).json(updatedProblem);
     }catch(err){
-        console.log(err);
+        // console.log(err);
         res.status(400).json({error : err});
     }
 }

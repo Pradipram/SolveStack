@@ -7,11 +7,12 @@ import { UpdateProblem } from "../../service/ProblemApi";
 
 const Problem = ({row}) =>{
     const [date,setDate] = useState('');
+    const [status,setStatus] = useState('Done');
     let backgroundColor = "";
-    if(row.status === 'Pending'){
+    if(status === 'Pending'){
         backgroundColor = '#f59d9d'
     }
-    else if(row.status === 'Done'){
+    else if(status === 'Done'){
         backgroundColor = 'green'
     }
     else{
@@ -27,13 +28,18 @@ const Problem = ({row}) =>{
         setDate(formattedDate)
     },[row.date])
 
-    const UpdateProblemStatus = (e) =>{
+    useEffect(()=>{
+        setStatus(row.status);
+    },[row.status]);
+
+    const UpdateProblemStatus = async(e) =>{
         const updatedProblem = {
             _id : row._id,
             status : e.target.value
         }
-        const res = UpdateProblem(updatedProblem);
-        console.log("res we are getting from UpdateProblemStatus is ",res);
+        const res = await UpdateProblem(updatedProblem);
+        // console.log("res we are getting from UpdateProblemStatus is ",res);
+        setStatus(res.data.status);
     }
 
     return (    
@@ -48,7 +54,7 @@ const Problem = ({row}) =>{
                 <TableCell align="center">{row.rating}</TableCell>
                 <TableCell align="center">
                     <FormControl size="small">
-                        <Select value={row.status} onChange={UpdateProblemStatus}>
+                        <Select value={status} onChange={UpdateProblemStatus}>
                             <MenuItem value = 'Pending'>Pending</MenuItem>
                             <MenuItem value = 'Done'>Done</MenuItem>
                             <MenuItem value = 'Revisit'>Revisit</MenuItem>

@@ -24,7 +24,7 @@ const ProblemSet = () => {
       const res = await getAllProblems();
       // console.log(res);
       if(res && res.status === 200){
-        console.log("problem details is ",res.data);
+        // console.log("problem details is ",res.data);
         setRow(res.data);
       }
     }
