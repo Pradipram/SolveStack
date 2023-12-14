@@ -1,6 +1,7 @@
 import { Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
+import {toast} from 'react-toastify';
 
 import './problemset.css'
 import { addProblem } from "../../service/ProblemApi";
@@ -46,15 +47,19 @@ const AddProblem = ()=>{
             email:email,
         }
         const res = await addProblem(newProblem);
-        console.log('res in handleAddProblem ',res);
+        console.log('res in handleAddProblem ',res);    
         if(res && res.status === 200){
+            toast('Problem added successfully');    
             navigate('/problemset')
         }
         else if(res.code === "ERR_BAD_REQUEST"){
+            if(res.response.data.other){
+                toast(res.response.data.other);
+            }
             setError(res.response.data);
         }
         else{
-            alert('something went wrong');
+            toast('Internal Server error');
         }
     }
 

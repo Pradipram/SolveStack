@@ -1,17 +1,30 @@
 import Problem from "../model/problemSchema.js";
 import User from "../model/userSchema.js";
 
-const handleError = (err) =>{
-    // console.log(err.message,err.code);
-    let errors = {id: '',name: '',rating:'',url:''};
-    if(err.message.includes('problem validation failed')){ 
-        Object.values(err.errors).forEach(({properties}) =>{
-            errors[properties.path] = properties.message;
-        })
+const handleError = (err) => {
+    let errors = { id: '', name: '', rating: '', url: '',other:'' };
+    try{
+    
+        if (err.message && err.message.includes('problem validation failed')) {
+            Object.values(err.errors).forEach(({ properties }) => {
+                if(properties){
+                    errors[properties.path] = properties.message;
+                }
+                else{
+                    errors.other = err.message;
+                }
+                // console.log(properties);
+            });
+            // console.log(err.errors);
+        }
+        return errors;
     }
+    catch(err){
+        errors.other = 'Something Unexpected happened';
+    }
+};
 
-    return errors;
-}
+
 
 export const addproblem = async(req,res)=>{
     // console.log(req.body);
@@ -25,7 +38,7 @@ export const addproblem = async(req,res)=>{
         }
         else{
             const newProblem = await new Problem(problem);
-            console.log('newProblem',newProblem);
+            // console.log('newProblem',newProblem);
             await newProblem.save();
             res.status(200).json(newProblem);
         }

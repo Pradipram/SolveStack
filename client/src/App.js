@@ -79,7 +79,10 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/addproblem" element={<AddProblem />} />
+          {/* <Route path="/addproblem" element={<AddProblem />} /> */}
+          <Route path="/addproblem" element={<ProtectedRoute user={user}>
+            <AddProblem/>
+          </ProtectedRoute>}/>
         </Routes>
       </BrowserRouter>
       <ToastContainer/>
