@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./App.css";
 import Home from "./components/home/Home";
@@ -49,36 +51,39 @@ function App() {
   // const [user,setUser] = useState();
 
   return (
-    <BrowserRouter>
-      {/* <h1>I am getting this {user}</h1> */}
-      <Navbar user={user}/>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/login" element={<Login/>} /> */}
+    <>
+      <BrowserRouter>
+        {/* <h1>I am getting this {user}</h1> */}
+        <Navbar user={user}/>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/login" element={<Login/>} /> */}
 
-        <Route path="/login" element = {<LoginProtectedRoute user={user}>
-          <Login/>
-        </LoginProtectedRoute>} />
+          <Route path="/login" element = {<LoginProtectedRoute user={user}>
+            <Login/>
+          </LoginProtectedRoute>} />
 
-        {/* <Route path="/signup" element={<SignUp/>} /> */}
-        <Route path="/signup" element={
-          <LoginProtectedRoute user={user}>
-            <SignUp/>
-          </LoginProtectedRoute>
-        } />
+          {/* <Route path="/signup" element={<SignUp/>} /> */}
+          <Route path="/signup" element={
+            <LoginProtectedRoute user={user}>
+              <SignUp/>
+            </LoginProtectedRoute>
+          } />
 
-        <Route
-          path="/problemset"
-          element={
-            <ProtectedRoute user={user}>
-              <ProblemSet />
-              {/* <Route path="/problemset" element={<ProblemSet/>}/> */}
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/addproblem" element={<AddProblem />} />
-      </Routes>
-    </BrowserRouter>
+          <Route
+            path="/problemset"
+            element={
+              <ProtectedRoute user={user}>
+                <ProblemSet />
+                {/* <Route path="/problemset" element={<ProblemSet/>}/> */}
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/addproblem" element={<AddProblem />} />
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer/>
+    </>
   );
 }
 

@@ -63,12 +63,25 @@ export const getAllProblems = async(req,res)=>{
 export const UpdateProblem = async(req,res) =>{
     try{
         // console.log("coming in UpdateProblem");
-        console.log(req.body);
+        // console.log(req.body);
         // const res = Problem.findOneAndUpdate(req.body._d,{status:req.body.status});
         const updatedProblem = await Problem.findByIdAndUpdate(req.body._id,{status:req.body.status},{new:true}).exec();
         res.status(200).json(updatedProblem);
     }catch(err){
         // console.log(err);
         res.status(400).json({error : err});
+    }
+}
+
+export const DeleteProblem = async(req,res) =>{
+    try{
+        // console.log('coming in function');
+        // console.log(req.params.id);
+        await Problem.findByIdAndDelete(req.params.id);
+        res.status(200).json({success:true,message:"Your Problem deleted Successfully"});
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({message:'Internal Server Error',error:err});
     }
 }

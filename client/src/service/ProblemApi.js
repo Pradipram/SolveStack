@@ -37,3 +37,14 @@ export const UpdateProblem = async (newProblem) =>{
     return err;
   }
 }
+
+export const DeleteProblem = async (id) =>{
+  try{
+    // console.log("id is ",id);
+    const res = await axios.delete(`${url}/deleteproblem/${id}`);
+    return res;
+  }
+  catch(err){
+    return err;
+  }
+}

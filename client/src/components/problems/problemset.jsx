@@ -7,12 +7,13 @@ import {
   TableBody,
   TableSortLabel,
 } from "@mui/material";
+import { toast } from 'react-toastify';
 
 import Problem from "./problem";
 import "./problemset.css";
 
 import { useEffect, useState } from "react";
-import { getAllProblems } from "../../service/ProblemApi";
+import { DeleteProblem, getAllProblems } from "../../service/ProblemApi";
 
 const ProblemSet = () => {
   const [order, setOrder] = useState("asc");
@@ -41,6 +42,23 @@ const ProblemSet = () => {
     order === "desc"
       ? rows.slice().sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
       : rows.slice().sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
+
+    const handleDelete = async(id) =>{
+        // console.log('delete button is clicked',id);
+        const res = await DeleteProblem(id);
+        // console.log(res);
+        if(!res.status){
+          toast.error("Internal server error. Please Try after some time");
+        }
+        else if(res.status === 200){
+          toast.success(res.data.message);
+          const updatedRows = rows.filter(row => row._id !== id);
+          setRow(updatedRows);
+        }
+        else{
+          toast.error('Internal Server Error');
+        }
+    }
 
   return (
     <div className="problemset">
@@ -90,7 +108,7 @@ const ProblemSet = () => {
             </TableHead>
             <TableBody>
               {sortedRows.map((row) => (
-                <Problem row={row} key={row.date} />
+                <Problem row={row} key={row.date} handleDelete={handleDelete}/>
               ))}
             </TableBody>
           </Table>

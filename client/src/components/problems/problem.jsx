@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import "./problemset.css"
 import { UpdateProblem } from "../../service/ProblemApi";
 
-const Problem = ({row}) =>{
+const Problem = ({row,handleDelete}) =>{
     const [date,setDate] = useState('');
     const [status,setStatus] = useState('Done');
     let backgroundColor = "";
@@ -62,7 +62,7 @@ const Problem = ({row}) =>{
                     </FormControl>
                 </TableCell>
                 <TableCell align="center">
-                    <Button>
+                    <Button onClick={() => handleDelete(row._id)}>
                         <DeleteIcon sx={{color:"black"}}/>
                     </Button>
                 </TableCell>
