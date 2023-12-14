@@ -20,7 +20,7 @@ const Login = () => {
   const [login, setLogin] = useState(loginInitials);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setUser, setEmail } = useUserContext();
+  const { setUser,setEmail } = useUserContext();
 
   const onValueChange = (e) => {
     // console.log("target is ",e.target.value);

@@ -10,10 +10,9 @@ import {
 
 import Problem from "./problem";
 import "./problemset.css";
-// import { rows } from "./handleProblem";
+
 import { useEffect, useState } from "react";
 import { getAllProblems } from "../../service/ProblemApi";
-import {useUserContext} from '../../context/userContext';
 
 const ProblemSet = () => {
   const [order, setOrder] = useState("asc");
@@ -25,6 +24,7 @@ const ProblemSet = () => {
       const res = await getAllProblems();
       // console.log(res);
       if(res && res.status === 200){
+        console.log("problem details is ",res.data);
         setRow(res.data);
       }
     }
@@ -83,6 +83,9 @@ const ProblemSet = () => {
               </TableCell>
               <TableCell style={{ width: "20%" }} align="center">
                 Status
+              </TableCell>
+              <TableCell>
+                {/* Action */}
               </TableCell>
             </TableHead>
             <TableBody>

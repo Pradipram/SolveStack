@@ -30,7 +30,7 @@ const SignUp = () => {
   const [seen, setseen] = useState(false);
   const [signup, setsignup] = useState(signupInitials);
   const [error, setError] = useState(errorInitials);
-  const { setUser, setEmail } = useUserContext();
+  const { setUser,setEmail } = useUserContext();
 
   const onValueChange = (e) => {
     setError(errorInitials);

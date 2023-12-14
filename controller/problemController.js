@@ -59,3 +59,16 @@ export const getAllProblems = async(req,res)=>{
         res.status(400).json({msg:'internal server error ',errors: err});
     }
 }
+
+export const UpdateProblem = async(req,res) =>{
+    try{
+        // console.log("coming in UpdateProblem");
+        console.log(req.body);
+        // const res = Problem.findOneAndUpdate(req.body._d,{status:req.body.status});
+        const res = Problem.findByIdAndUpdate(req.body._id,{status:req.body.status});
+        res.status(200).json(res);
+    }catch(err){
+        console.log(err);
+        res.status(400).json({error : err});
+    }
+}

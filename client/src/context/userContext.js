@@ -7,7 +7,7 @@ export const useUserContext = () =>{
 }
 
 export const UserContextProvider = ({children}) =>{
-    const [user,setUser] = useState('');
+    const [user,setUser] = useState(null);
     const [email,setEmail] = useState('');
     return (
         <userContext.Provider value={{user,setUser,email,setEmail}}>

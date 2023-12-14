@@ -27,3 +27,13 @@ export const getAllProblems = async () => {
     return err;
   }
 };
+
+export const UpdateProblem = async (newProblem) =>{
+  try{
+    const res = await axios.put(`${url}/updateproblem`,newProblem);
+    return res;
+  }
+  catch(err){
+    return err;
+  }
+}

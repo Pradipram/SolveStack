@@ -77,7 +77,7 @@ export const getuser = (req,res) =>{
   if(token){
       jwt.verify(token,secreteKey,async(err,decodedToken)=>{
           if(err){
-              console.log("Error in getting user details",err);
+              // console.log("Error in getting user details",err);
               res.status(401).json({message:"not authenicated"});
               // res.redirect("/");
           }
