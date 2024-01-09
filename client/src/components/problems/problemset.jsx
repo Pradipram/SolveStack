@@ -14,6 +14,7 @@ import "./problemset.css";
 
 import { useEffect, useState } from "react";
 import { DeleteProblem, getAllProblems } from "../../service/ProblemApi";
+import EmptyProblem from "../EmptyProblem/EmptyProblem";
 
 const ProblemSet = ({ setLoading }) => {
   const [order, setOrder] = useState("asc");
@@ -68,67 +69,75 @@ const ProblemSet = ({ setLoading }) => {
   };
 
   return (
-    <div className="problemset">
-      <h2 style={{ paddingTop: "20px" }}>Your Learning Libararies </h2>
-      <div className="table">
-        <TableContainer component={Paper}>
-          <Table size="small">
-            <TableHead style={{ backgroundColor: "#cccdcf" }}>
-              <TableCell style={{ width: "15%" }} align="center">
-                <TableSortLabel
-                  active={orderBy === "date"}
-                  direction={order}
-                  onClick={() => handleRequestSort("date")}
-                >
-                  Date
-                </TableSortLabel>
-              </TableCell>
-              <TableCell style={{ width: "5%" }} align="center">
-                <TableSortLabel
-                  active={orderBy === "problemId"}
-                  direction={order}
-                  onClick={() => handleRequestSort("problemId")}
-                >
-                  ProblemId
-                </TableSortLabel>
-              </TableCell>
-              <TableCell style={{ width: "65%" }} align="center">
-                <TableSortLabel
-                  active={orderBy === "problemName"}
-                  direction={order}
-                  onClick={() => handleRequestSort("problemName")}
-                >
-                  Problem Name
-                </TableSortLabel>
-              </TableCell>
-              <TableCell style={{ width: "5%" }} align="center">
-                <TableSortLabel
-                  active={orderBy === "rating"}
-                  direction={order}
-                  onClick={() => handleRequestSort("rating")}
-                >
-                  Rating
-                </TableSortLabel>
-              </TableCell>
-              <TableCell style={{ width: "20%" }} align="center">
-                Status
-              </TableCell>
-              <TableCell>{/* Action */}</TableCell>
-            </TableHead>
-            <TableBody>
-              {sortedRows.map((row) => (
-                <Problem
-                  row={row}
-                  key={row.date}
-                  handleDelete={handleDelete}
-                  setLoading={setLoading}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </div>
+    <>
+      {rows && rows.length === 0 ? (
+        <EmptyProblem />
+      ) : (
+        <>
+          <div className="problemset">
+            <h2 style={{ paddingTop: "20px" }}>Your Learning Libararies </h2>
+            <div className="table">
+              <TableContainer component={Paper}>
+                <Table size="small">
+                  <TableHead style={{ backgroundColor: "#cccdcf" }}>
+                    <TableCell style={{ width: "15%" }} align="center">
+                      <TableSortLabel
+                        active={orderBy === "date"}
+                        direction={order}
+                        onClick={() => handleRequestSort("date")}
+                      >
+                        Date
+                      </TableSortLabel>
+                    </TableCell>
+                    <TableCell style={{ width: "5%" }} align="center">
+                      <TableSortLabel
+                        active={orderBy === "problemId"}
+                        direction={order}
+                        onClick={() => handleRequestSort("problemId")}
+                      >
+                        ProblemId
+                      </TableSortLabel>
+                    </TableCell>
+                    <TableCell style={{ width: "65%" }} align="center">
+                      <TableSortLabel
+                        active={orderBy === "problemName"}
+                        direction={order}
+                        onClick={() => handleRequestSort("problemName")}
+                      >
+                        Problem Name
+                      </TableSortLabel>
+                    </TableCell>
+                    <TableCell style={{ width: "5%" }} align="center">
+                      <TableSortLabel
+                        active={orderBy === "rating"}
+                        direction={order}
+                        onClick={() => handleRequestSort("rating")}
+                      >
+                        Rating
+                      </TableSortLabel>
+                    </TableCell>
+                    <TableCell style={{ width: "20%" }} align="center">
+                      Status
+                    </TableCell>
+                    <TableCell>{/* Action */}</TableCell>
+                  </TableHead>
+                  <TableBody>
+                    {sortedRows.map((row) => (
+                      <Problem
+                        row={row}
+                        key={row.date}
+                        handleDelete={handleDelete}
+                        setLoading={setLoading}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
