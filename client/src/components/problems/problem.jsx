@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import "./problemset.css"
 import { UpdateProblem } from "../../service/ProblemApi";
 
-const Problem = ({row,handleDelete}) =>{
+const Problem = ({row,handleDelete,setLoading}) =>{
     const [date,setDate] = useState('');
     const [status,setStatus] = useState('Done');
     let backgroundColor = "";
@@ -33,6 +33,7 @@ const Problem = ({row,handleDelete}) =>{
     },[row.status]);
 
     const UpdateProblemStatus = async(e) =>{
+        setLoading(true);
         const updatedProblem = {
             _id : row._id,
             status : e.target.value
@@ -40,6 +41,7 @@ const Problem = ({row,handleDelete}) =>{
         const res = await UpdateProblem(updatedProblem);
         // console.log("res we are getting from UpdateProblemStatus is ",res);
         setStatus(res.data.status);
+        setLoading(false);
     }
 
     return (    

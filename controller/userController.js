@@ -55,6 +55,7 @@ export const signIn = async(req,res) =>{
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true,secure:false, maxAge: maxAge * 1000 });
     // setCookie(token,res);
+    // console.log(user,'userController.js',58);
     res.status(200).json({user:user._id,name:user.username,email:user.email});
   }
   catch(err){
@@ -72,23 +73,36 @@ export const logoutUser = (req,res) =>{
 }
 
 export const getuser = (req,res) =>{
-  const token = req.cookies.jwt;
-  const secreteKey = process.env.SECRET_KEY;
-  if(token){
-      jwt.verify(token,secreteKey,async(err,decodedToken)=>{
-          if(err){
-              // console.log("Error in getting user details",err);
-              res.status(401).json({message:"not authenicated"});
-              // res.redirect("/");
-          }
-          else{
-              const user = await User.findById(decodedToken.id);
-              res.status(200).json({username : user.username,email:user.email});
-          }
-      })
+  try{
+    const token = req.cookies.jwt;
+    const secreteKey = process.env.SECRET_KEY;
+    // console.log(token,secreteKey,"userController.js",79);
+    if(token){
+        jwt.verify(token,secreteKey,async(err,decodedToken)=>{
+            if(err){
+                // console.log("Error in getting user details",err);
+                res.status(401).json({message:"not authenicated"});
+                // res.redirect("/");
+            }
+            else{
+                // console.log(decodedToken,"userController.js",88);
+                const user = await User.findById(decodedToken.id);
+                if(user){
+                  res.status(200).json({username : user.username,email:user.email});
+                }
+                else{
+                  res.status(401).json({message:"not authenticated"});
+                }
+                // console.log(user,'userController',88);
+            }
+        })
+    }
+    else{
+        res.status(401).json({message:"not authenticated"});    
+        // res.redirect("/");
+    }
   }
-  else{
-      res.status(401).json({message:"not authenticated"});    
-      // res.redirect("/");
+  catch(err){
+    console.log(err,"userController",99);
   }
 };

@@ -58,7 +58,7 @@ const Navbar = () => {
       }
     };
     userdetail();
-  }, [setUser, setEmail]);
+  }, [setUser,setEmail]);
 
   const handleAvatarClick = () => {
     // console.log("avatar is clicked")

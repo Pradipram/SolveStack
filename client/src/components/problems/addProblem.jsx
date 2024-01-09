@@ -22,7 +22,29 @@ const errorinit = {
     url:'',
 }
 
-const AddProblem = ()=>{
+const validateProblem = (problem) =>{
+    const errors = {...errorinit};
+    const field = ['id','name','rating','url'];
+    field.forEach((element)=>{
+        if(!problem[element].trim()){
+            errors[element] = `Please enter ${element}`;
+        }
+    })
+    const rating = +problem.rating;
+    if(isNaN(rating)){
+        errors["rating"] = "Rating must be integer";
+    }
+    return errors;
+}
+
+const isError = (errors) =>{
+    if(errors.id || errors.name || errors.rating || errors.url){
+        return true;
+    }
+    return false;
+}
+
+const AddProblem = ({setLoading})=>{
     // const [status,setStatus] = useState('Pending');
     const [problem,setProblem] = useState(probleminit);
     const {email} = useUserContext();
@@ -41,26 +63,39 @@ const AddProblem = ()=>{
 
     const handleAddProblem = async()=>{
         // console.log('add problem is clicked',problem);
-        setError(errorinit);
-        let newProblem = {
-            ...problem,
-            email:email,
-        }
-        const res = await addProblem(newProblem);
-        console.log('res in handleAddProblem ',res);    
-        if(res && res.status === 200){
-            toast('Problem added successfully');    
-            navigate('/problemset')
-        }
-        else if(res.code === "ERR_BAD_REQUEST"){
-            if(res.response.data.other){
-                toast(res.response.data.other);
-            }
-            setError(res.response.data);
+        setLoading(true);
+        const err = validateProblem(problem);
+        if(isError(err)){
+            setError(err);
+            setLoading(false);
         }
         else{
-            toast('Internal Server error');
+            let newProblem = {
+                ...problem,
+                email:email,
+            }
+            const res = await addProblem(newProblem);
+            // console.log('res in handleAddProblem ',res);    
+            if(res && res.status === 200){
+                setLoading(false);
+                toast('Problem added successfully');    
+                navigate('/problemset')
+            }
+            // else if(res.code === "ERR_BAD_REQUEST"){
+            //     setLoading(false);
+            //     // if(res.response.data.other){
+            //     //     toast(res.response.data.other);
+            //     // }
+            //     // setError(res.response.data);
+            //     toast.error("Something went wrong at our side");
+            //     // toast("Please enter something");
+            // }
+            else{
+                setLoading(false);
+                toast('Internal Server error');
+            }
         }
+        setLoading(false);
     }
 
     const handleInputChange = (e)=>{

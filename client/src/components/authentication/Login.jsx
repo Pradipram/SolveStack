@@ -15,7 +15,7 @@ const loginInitials = {
   password: "",
 };
 
-const Login = () => {
+const Login = ({setLoading}) => {
   const [seen, setseen] = useState(false);
   const [login, setLogin] = useState(loginInitials);
   const [error, setError] = useState("");
@@ -30,6 +30,7 @@ const Login = () => {
 
   const loginUser = async () => {
     setError("");
+    setLoading(true);
     let response = await authenticateLogin(login);
     if (!response) {
       alert("something went wrong.Please try again");
@@ -45,6 +46,7 @@ const Login = () => {
         setEmail(response.data.email);
       }
     }
+    setLoading(false);
   };
 
   return (

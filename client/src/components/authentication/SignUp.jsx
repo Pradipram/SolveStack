@@ -24,13 +24,39 @@ const errorInitials = {
   password: "",
 };
 
-const SignUp = () => {
+const validateSignupData = (signupData) => {
+  const errors = { ...errorInitials };
+
+  // Define fields to validate
+  const fieldsToValidate = ["username", "email", "password"];
+
+  // Iterate over fields and check for empty values
+  fieldsToValidate.forEach((field) => {
+    if (!signupData[field].trim()) {
+      errors[field] = `Please enter ${field}`;
+    }
+  });
+
+  // Check if passwords match
+  if (signupData.password !== signupData.confirmPassword) {
+    errors.password = "Passwords do not match";
+  }
+
+  return errors;
+};
+
+const isErrorPresent = (errors) => {
+  if (errors.username || errors.email || errors.password) return 1;
+  return 0;
+};
+
+const SignUp = ({ setLoading }) => {
   const navigate = useNavigate();
 
   const [seen, setseen] = useState(false);
   const [signup, setsignup] = useState(signupInitials);
   const [error, setError] = useState(errorInitials);
-  const { setUser,setEmail } = useUserContext();
+  const { setUser, setEmail } = useUserContext();
 
   const onValueChange = (e) => {
     setError(errorInitials);
@@ -38,38 +64,30 @@ const SignUp = () => {
   };
 
   const signupuser = async () => {
-    setError(errorInitials);
-    if (signup.password !== signup.confirmPassword) {
-      setError({ ...errorInitials, password: "Password do not match" });
+    setLoading(true);
+    // if()
+    const err = validateSignupData(signup);
+    if (isErrorPresent(err)) {
+      setError(err);
+      setLoading(false);
     } else {
-      const signupData = {
-        username: signup.username,
-        email: signup.email,
-        password: signup.password,
-      };
       try {
-        let response = await authenticateSignup(signupData);
-        if (!response) {
-          alert("Something went wrong.Plese try again");
-        }
-        const statusCode = response.status;
-        if (statusCode === 400) {
-          let finalError = {
-            username: response.data.errors.username,
-            email: response.data.errors.email,
-            password: response.data.errors.password,
-          };
-          setError(finalError);
+        let response = await authenticateSignup(signup);
+        if (!response || response.status === 400) {
+          alert("Something went wrong. Please try again");
+          setLoading(false);
         } else {
-          // console.log(response);
           setUser(signup.username);
           setEmail(signup.email);
           navigate("/problemset");
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     }
+    setLoading(false);
   };
 
   return (
