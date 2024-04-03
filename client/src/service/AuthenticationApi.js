@@ -7,7 +7,7 @@ export const authenticateLogin = async (user) => {
     const res = await axios.post(`${url}/login`, user, {
       withCredentials: true,
     });
-    // console.log("in api authenicateLogin res is ",res);
+    console.log("in api authenicateLogin res is ",res);
     return res;
   } catch (error) {
     return error.response;
@@ -16,6 +16,7 @@ export const authenticateLogin = async (user) => {
 
 export const authenticateSignup = async (user) => {
   try {
+    console.log("comming in controller")
     const res = await axios.post(`${url}/signup`, user, {
       withCredentials: true,
     });

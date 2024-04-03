@@ -1,37 +1,42 @@
-import { Button, TextField, Typography } from "@mui/material";
-import EmailIcon from "@mui/icons-material/Email";
-import KeyIcon from "@mui/icons-material/Key";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { Typography } from "@mui/material";
 
 import "./auth.css";
 import { useState } from "react";
+// import { authenticateLogin } from "../../service/AuthenticationApi";
 import { authenticateLogin } from "../../service/AuthenticationApi";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/userContext";
+import "../../assets/css/authentication.css";
+
+//images
+import bg from "../../images/img1.jpg";
 
 const loginInitials = {
   email: "",
   password: "",
 };
 
-const Login = ({setLoading}) => {
+const Login = ({ setLoading }) => {
   const [seen, setseen] = useState(false);
   const [login, setLogin] = useState(loginInitials);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setUser,setEmail } = useUserContext();
+  const { setUser, setEmail } = useUserContext();
 
   const onValueChange = (e) => {
     // console.log("target is ",e.target.value);
     setError("");
     setLogin({ ...login, [e.target.name]: e.target.value });
+    console.log(e.target.value);
   };
 
   const loginUser = async () => {
+    // e.preventDefault();
     setError("");
     setLoading(true);
+    console.log("login", login, 40);
     let response = await authenticateLogin(login);
+    console.log(response);
     if (!response) {
       alert("something went wrong.Please try again");
     } else {
@@ -50,59 +55,65 @@ const Login = ({setLoading}) => {
   };
 
   return (
-    <div className="auth">
-      <div className="signup">
-        <h1>Login</h1>
-        <form>
-          <div className="form-input">
-            <EmailIcon />
-            <TextField
-              placeholder="Enter Your email"
-              variant="standard"
+    <div className="login">
+      <img src={bg} alt="background" className="login__bg" />
+
+      <form className="login__form">
+        <h1 className="login__title">Login</h1>
+
+        <div className="login__inputs">
+          <div className="login__box">
+            <input
+              type="email"
+              placeholder="Email ID"
+              required
               name="email"
+              className="login__input"
               onChange={(e) => onValueChange(e)}
             />
+            <i className="ri-mail-fill"></i>
           </div>
-          <div className="form-input">
-            <KeyIcon />
-            <TextField
+
+          <div className="login__box">
+            <input
               type={seen ? "text" : "password"}
-              placeholder="Enter Your Password"
-              variant="standard"
+              placeholder="Password"
+              required
               name="password"
+              className="login__input"
               onChange={(e) => onValueChange(e)}
             />
-            <div
+            <i className="ri-lock-2-fill"></i>
+          </div>
+        </div>
+        <Typography className="error">{error}</Typography>
+
+        <div className="login__check">
+          <div className="login__check-box">
+            <input
+              type="checkbox"
+              className="login__check-input"
+              id="user-check"
               onClick={() => {
                 setseen(!seen);
               }}
-            >
-              {seen ? (
-                <VisibilityOffIcon style={{ opacity: "0.4" }} />
-              ) : (
-                <VisibilityIcon style={{ opacity: "0.4" }} />
-              )}
-            </div>
+            />
+            <label className="login__check-label">Show Password</label>
           </div>
-          <Typography className="error">{error}</Typography>
-          <Button
-            style={{ margin: 10, width: "40%" }}
-            variant="contained"
-            onClick={loginUser}
-          >
-            Login
-          </Button>
 
-          <Typography>Or</Typography>
-          <Button
-            href="/signup"
-            style={{ backgroundColor: "white", color: "blue", width: "80%" }}
-            variant="contained"
-          >
-            Don't have Account?SignUp
-          </Button>
-        </form>
-      </div>
+          <a href="https://github.com/Pradipram" className="login__forgot">
+            Forgot Password?
+          </a>
+        </div>
+
+        <button type="submit" className="login__button" onClick={loginUser}>
+          Login
+        </button>
+
+        <div className="login__register">
+          Don't have an account? <a href="/signup">Register</a>
+        </div>
+      </form>
     </div>
   );
 };
