@@ -27,16 +27,16 @@ const Login = ({ setLoading }) => {
     // console.log("target is ",e.target.value);
     setError("");
     setLogin({ ...login, [e.target.name]: e.target.value });
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
-  const loginUser = async () => {
-    // e.preventDefault();
+  const loginUser = async (e) => {
+    e.preventDefault();
     setError("");
-    setLoading(true);
+    // setLoading(true);
     console.log("login", login, 40);
     let response = await authenticateLogin(login);
-    console.log(response);
+    console.log("Login.js,39",response);
     if (!response) {
       alert("something went wrong.Please try again");
     } else {
@@ -51,7 +51,7 @@ const Login = ({ setLoading }) => {
         setEmail(response.data.email);
       }
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   return (
@@ -106,7 +106,7 @@ const Login = ({ setLoading }) => {
           </a>
         </div>
 
-        <button type="submit" className="login__button" onClick={loginUser}>
+        <button type="submit" className="login__button" onClick={(e) => loginUser(e)}>
           Login
         </button>
 

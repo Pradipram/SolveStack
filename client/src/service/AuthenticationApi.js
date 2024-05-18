@@ -1,11 +1,12 @@
 import axios from "axios";
 
-import { url } from "../constants/data";
-
 export const authenticateLogin = async (user) => {
   try {
-    const res = await axios.post(`${url}/login`, user, {
+    const res = await axios.post('/login', user, {
       withCredentials: true,
+      headers:{
+        "Accept":"application/json"
+      }
     });
     console.log("in api authenicateLogin res is ",res);
     return res;
@@ -17,7 +18,9 @@ export const authenticateLogin = async (user) => {
 export const authenticateSignup = async (user) => {
   try {
     console.log("comming in controller")
-    const res = await axios.post(`${url}/signup`, user, {
+    // const res = await axios.post(`${url}/signup`, user, {
+    const res = await axios.post('/signup', user, {
+
       withCredentials: true,
     });
     // console.log("in api.authenticateSignup res is ",res);
@@ -30,7 +33,9 @@ export const authenticateSignup = async (user) => {
 
 export const getUser = async () => {
   try {
-    const res = await axios.get(`${url}/getuser`, { withCredentials: true });
+    // const res = await axios.get(`${url}/getuser`, { withCredentials: true });
+    const res = await axios.get('/getuser', { withCredentials: true });
+
     return res;
   } catch (err) {
     return err.response;
@@ -39,11 +44,9 @@ export const getUser = async () => {
 
 export const logoutUser = async () => {
   try {
-    const res = await axios.post(
-      `${url}/logout`,
-      {},
-      { withCredentials: true }
-    );
+    // const res = await axios.post(`${url}/logout`,{},{ withCredentials: true });
+    const res = await axios.post('/logout',{},{ withCredentials: true });
+
     return res;
   } catch (err) {
     // return err.response;
