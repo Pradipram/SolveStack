@@ -103,6 +103,7 @@ img {
   background: none;
   color: var(--white-color);
   padding-block: 1rem;
+  padding-left: 1rem;
 }
 
 .login__input::placeholder {
