@@ -13,6 +13,10 @@ import AddProblem from "./components/problems/addProblem";
 import { useUserContext } from "./context/userContext";
 import Loader from "./components/loader/Loader";
 
+import reactGA from "react-ga4";
+
+reactGA.initialize("G-D6FF9EF2PV");
+
 const ProtectedRoute = ({ user, children }) => {
   // const { user } = useUserContext()
   const [isUserLoaded, setIsUserLoaded] = useState(false);
