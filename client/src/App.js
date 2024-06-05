@@ -69,7 +69,7 @@ function App() {
                 path="/login"
                 element={
                   <LoginProtectedRoute user={user}>
-                    <Login setLoading={setLoading} />
+                    <Login />
                   </LoginProtectedRoute>
                 }
               />

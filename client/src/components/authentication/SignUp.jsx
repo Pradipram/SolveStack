@@ -1,15 +1,11 @@
-import { Button, TextField, Typography } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import EmailIcon from "@mui/icons-material/Email";
-import KeyIcon from "@mui/icons-material/Key";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-
-import "./auth.css";
+import { Typography } from "@mui/material";
 import { useState } from "react";
 import { authenticateSignup } from "../../service/AuthenticationApi";
 import { useUserContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
+
+// images
+import bg from "../../images/img1.jpg";
 
 const signupInitials = {
   username: "",
@@ -38,6 +34,12 @@ const validateSignupData = (signupData) => {
   });
 
   // Check if passwords match
+  console.log(
+    "SignUP.jsx, 41,password: ",
+    signupData.password,
+    " confirmPassword: ",
+    signupData.confirmPassword
+  );
   if (signupData.password !== signupData.confirmPassword) {
     errors.password = "Passwords do not match";
   }
@@ -63,108 +65,112 @@ const SignUp = ({ setLoading }) => {
     setsignup({ ...signup, [e.target.name]: e.target.value });
   };
 
-  const signupuser = async () => {
-    setLoading(true);
+  const signupuser = async (e) => {
     // if()
+    e.preventDefault();
     const err = validateSignupData(signup);
     if (isErrorPresent(err)) {
       setError(err);
       setLoading(false);
     } else {
       try {
+        setLoading(true);
         let response = await authenticateSignup(signup);
+        setLoading(false);
         if (!response || response.status === 400) {
           alert("Something went wrong. Please try again");
-          setLoading(false);
         } else {
           setUser(signup.username);
           setEmail(signup.email);
           navigate("/problemset");
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
-        setLoading(false);
+        // setLoading(false);
       }
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   return (
-    <div className="auth">
-      <div className="signup">
-        <h1>Sign Up</h1>
-        <form>
-          <div className="form-input">
-            <AccountCircleIcon />
-            <TextField
+    <div className="login">
+      <img src={bg} alt="background" className="login__bg" />
+      <form className="login__form">
+        <h1 className="login__title">Sign Up</h1>
+        <div className="login__inputs">
+          <div className="login__box">
+            <input
+              type="text"
               placeholder="Enter your name"
-              variant="standard"
+              required
               name="username"
+              className="login__input"
               onChange={(e) => onValueChange(e)}
             />
+            <i className="fa-solid fa-user" />
           </div>
           <Typography className="error">{error.username}</Typography>
-          <div className="form-input">
-            <EmailIcon />
-            <TextField
-              placeholder="Enter Your email"
-              variant="standard"
+          <div className="login__box">
+            <input
+              type="email"
+              placeholder="Email ID"
+              required
               name="email"
+              className="login__input"
               onChange={(e) => onValueChange(e)}
             />
+            <i className="ri-mail-fill"></i>
           </div>
           <Typography className="error">{error.email}</Typography>
-          <div className="form-input">
-            <KeyIcon />
-            <TextField
+          <div className="login__box">
+            <input
               type={seen ? "text" : "password"}
-              placeholder="Enter Your Password"
-              variant="standard"
+              placeholder="Password"
+              required
               name="password"
+              className="login__input"
               onChange={(e) => onValueChange(e)}
             />
-            <div
+            <i className="ri-lock-2-fill"></i>
+          </div>
+          <Typography className="error">{error.password}</Typography>
+          <div className="login__box">
+            <input
+              type="text"
+              placeholder="Password"
+              required
+              name="confirmPassword"
+              className="login__input"
+              onChange={(e) => onValueChange(e)}
+            />
+            <i className="ri-lock-2-fill"></i>
+          </div>
+          <Typography className="error">{error.password}</Typography>
+        </div>
+        <div className="login__check">
+          <div className="login__check-box">
+            <input
+              type="checkbox"
+              className="login__check-input"
+              id="user-check"
               onClick={() => {
                 setseen(!seen);
               }}
-            >
-              {seen ? (
-                <VisibilityOffIcon style={{ opacity: "0.4" }} />
-              ) : (
-                <VisibilityIcon style={{ opacity: "0.4" }} />
-              )}
-            </div>
-          </div>
-          <Typography className="error">{error.password}</Typography>
-          <div className="form-input">
-            <KeyIcon />
-            <TextField
-              placeholder="confirm Password"
-              variant="standard"
-              name="confirmPassword"
-              onChange={(e) => onValueChange(e)}
             />
+            <label className="login__check-label">Show Password</label>
           </div>
-          <Typography className="error">{error.password}</Typography>
-          <Button
-            style={{ margin: 10, width: "40%" }}
-            variant="contained"
-            onClick={signupuser}
-          >
-            SignUp
-          </Button>
-
-          <Typography>Or</Typography>
-          <Button
-            href="/login"
-            style={{ backgroundColor: "white", color: "blue", width: "80%" }}
-            variant="contained"
-          >
-            Have Account?Login
-          </Button>
-        </form>
-      </div>
+        </div>
+        <button
+          type="submit"
+          className="login__button"
+          onClick={(e) => signupuser(e)}
+        >
+          SignUp
+        </button>
+        <div className="login__register">
+          Already have an Account? <a href="/login">Sing In</a>
+        </div>
+      </form>
     </div>
   );
 };

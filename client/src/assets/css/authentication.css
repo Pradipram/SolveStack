@@ -79,7 +79,8 @@ img {
 }
 
 .login__inputs {
-  row-gap: 1.25rem;
+  /* row-gap: 1.25rem; */
+  row-gap: 5px;
   margin-bottom: 1rem;
 }
 
