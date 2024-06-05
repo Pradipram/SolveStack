@@ -13,3 +13,11 @@ root.render(
     </UserContextProvider>
   </React.StrictMode>
 );
+
+// Hide the preloader once React is rendered
+window.addEventListener('load', () => {
+  const preloader = document.querySelector('.preloader');
+  if (preloader) {
+    preloader.style.display = 'none';
+  }
+});
