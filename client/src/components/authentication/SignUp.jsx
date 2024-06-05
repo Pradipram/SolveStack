@@ -4,6 +4,8 @@ import { authenticateSignup } from "../../service/AuthenticationApi";
 import { useUserContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 
+import ReactGA from "react-ga4";
+
 // images
 import bg from "../../images/img1.jpg";
 
@@ -80,6 +82,15 @@ const SignUp = ({ setLoading }) => {
         if (!response || response.status === 400) {
           alert("Something went wrong. Please try again");
         } else {
+          // ReactGA.set({ user_id: signup.email });
+          ReactGA.initialize([
+            {
+              trackingId: "G-D6FF9EF2PV",
+              gaOptions: {
+                user_id: "test."+ signup.email,
+              },
+            },
+          ]);
           setUser(signup.username);
           setEmail(signup.email);
           navigate("/problemset");

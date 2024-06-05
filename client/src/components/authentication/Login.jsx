@@ -12,6 +12,8 @@ import "./auth.css";
 import bg from "../../images/img1.jpg";
 import Loader from "../loader/Loader";
 
+import ReactGA from "react-ga4";
+
 const loginInitials = {
   email: "",
   password: "",
@@ -55,6 +57,15 @@ const Login = () => {
         navigate("/problemset");
         setUser(response.data.name);
         setEmail(response.data.email);
+        // ReactGA.set({ user_id: response.data.email });
+        ReactGA.initialize([
+          {
+            trackingId: "G-D6FF9EF2PV",
+            gaOptions: {
+              user_id: "test." + response.data.email,
+            },
+          },
+        ]);
       }
     }
   };
