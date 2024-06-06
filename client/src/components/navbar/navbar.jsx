@@ -8,6 +8,8 @@ import UserProfileDrawer from "../authentication/profile";
 import { useUserContext } from "../../context/userContext";
 import { Link } from "react-router-dom";
 
+import ReactGA from "react-ga4"
+
 const Navbar = () => {
   // const [login,setLogin] = useState("");
   // const user = "Pradip Ram";
@@ -52,6 +54,17 @@ const Navbar = () => {
       if (response && response.status === 200) {
         setUser(response.data.username);
         setEmail(response.data.email);
+        const ga4 = response.data.ga4;
+        let user_id = response.data.email.replace("@","#");
+        ReactGA.initialize([
+          {
+            trackingId: ga4,
+            gaOptions: {
+              // user_id: "test."+ signup.email,
+              user_id : user_id
+            },
+          },
+        ]);
       } else {
         setUser("");
         setEmail("");

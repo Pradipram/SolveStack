@@ -84,9 +84,10 @@ const SignUp = ({ setLoading }) => {
         } else {
           // ReactGA.set({ user_id: signup.email });
           let user_id = signup.email.replace("@","#");
+          const ga4 = response.data.ga4;
           ReactGA.initialize([
             {
-              trackingId: "G-D6FF9EF2PV",
+              trackingId: ga4,
               gaOptions: {
                 // user_id: "test."+ signup.email,
                 user_id : user_id

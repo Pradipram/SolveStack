@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "concurrently \"npm start\" \"cd client && npm start\"",
+    "backend": "nodemon index.js",
+    "dev": "concurrently \"npm run backend\" \"cd client && npm start\"",
     "setup": "npm install && cd client && npm install",
     "build-client": "cd client && npm run build"
   },
@@ -23,7 +24,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.2",
     "nodemon": "^3.1.0",
-    "react-ga4": "^2.1.0",
     "validator": "^13.11.0"
   }
 }
