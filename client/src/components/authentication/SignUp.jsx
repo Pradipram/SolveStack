@@ -83,11 +83,13 @@ const SignUp = ({ setLoading }) => {
           alert("Something went wrong. Please try again");
         } else {
           // ReactGA.set({ user_id: signup.email });
+          let user_id = signup.email.replace("@","#");
           ReactGA.initialize([
             {
               trackingId: "G-D6FF9EF2PV",
               gaOptions: {
-                user_id: "test."+ signup.email,
+                // user_id: "test."+ signup.email,
+                user_id : user_id
               },
             },
           ]);

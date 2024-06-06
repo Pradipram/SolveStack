@@ -58,11 +58,14 @@ const Login = () => {
         setUser(response.data.name);
         setEmail(response.data.email);
         // ReactGA.set({ user_id: response.data.email });
+        let user_id = response.data.email.replace("@","#");
+
         ReactGA.initialize([
           {
             trackingId: "G-D6FF9EF2PV",
             gaOptions: {
-              user_id: "test." + response.data.email,
+              // user_id: "test." + response.data.email,
+              user_id: user_id
             },
           },
         ]);
