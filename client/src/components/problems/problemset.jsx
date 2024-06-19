@@ -25,7 +25,7 @@ const ProblemSet = ({ setLoading }) => {
     const getRow = async () => {
       // setLoading(true);
       const res = await getAllProblems();
-      console.log(res);
+      // console.log(res);
       if (res && res.status === 200) {
         // console.log("problem details is ",res.data);
         setRow(res.data);
