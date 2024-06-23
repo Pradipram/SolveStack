@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Footer } from "@p__radip/react-footer";
 
 import "./App.css";
 import Home from "./components/home/Home";
@@ -107,6 +108,7 @@ function App() {
                 }
               />
             </Routes>
+            <Footer websiteName="Solve Stack"/>
           </>
         )}
       </BrowserRouter>
