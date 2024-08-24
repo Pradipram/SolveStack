@@ -151,7 +151,7 @@ const SignUp = ({ setLoading }) => {
           <div className="login__box">
             <input
               type="text"
-              placeholder="Password"
+              placeholder="Confirm Password"
               required
               name="confirmPassword"
               className="login__input"

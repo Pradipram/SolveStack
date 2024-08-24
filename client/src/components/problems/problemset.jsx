@@ -107,6 +107,9 @@ const ProblemSet = ({ setLoading }) => {
                         Problem Name
                       </TableSortLabel>
                     </TableCell>
+                    <TableCell style={{ width: "20%" }} align="center">
+                      Plateform
+                    </TableCell>
                     <TableCell style={{ width: "5%" }} align="center">
                       <TableSortLabel
                         active={orderBy === "rating"}
@@ -119,7 +122,7 @@ const ProblemSet = ({ setLoading }) => {
                     <TableCell style={{ width: "20%" }} align="center">
                       Status
                     </TableCell>
-                    <TableCell>{/* Action */}</TableCell>
+                    <TableCell>Action</TableCell>
                   </TableHead>
                   <TableBody>
                     {sortedRows.map((row) => (
