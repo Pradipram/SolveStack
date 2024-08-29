@@ -28,16 +28,17 @@ const Problem = ({ row, handleDelete, setLoading }) => {
   useEffect(() => {
     const created_at_string = row.created_at;
     const created_at = new Date(created_at_string);
-    const options = { year: "numeric", month: "short", day: "numeric" };
+    const options = { year: "numeric", month: "short", day: "numeric",hour: "numeric", minute: "numeric" };
     const formattedDate = created_at.toLocaleDateString(undefined, options);
     // console.log(formattedDate);
     setCreatedDate(formattedDate)
+    // setCreatedDate(created_at)
   }, [row.created_at]);
 
   useEffect(() => {
     const updated_at_string = row.updated_at;
     const updated_at = new Date(updated_at_string);
-    const options = { year: "numeric", month: "short", day: "numeric" };
+    const options = { year: "numeric", month: "short", day: "numeric",hour: "numeric", minute: "numeric" };
     const formattedDate = updated_at.toLocaleDateString(undefined, options);
     // console.log(formattedDate);
     setUpdatedDate(formattedDate)

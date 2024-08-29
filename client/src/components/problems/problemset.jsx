@@ -8,11 +8,11 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom"; // Import useLocation hook
 
 import Problem from "./problem";
 import "./problemset.css";
-
-import { useEffect, useState } from "react";
 import { DeleteProblem, getAllProblems } from "../../service/ProblemApi";
 import EmptyProblem from "../EmptyProblem/EmptyProblem";
 
@@ -20,22 +20,37 @@ const ProblemSet = ({ setLoading }) => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("rating");
   const [rows, setRow] = useState([]);
+  const location = useLocation(); // Get the current URL
 
   useEffect(() => {
     const getRow = async () => {
-      // setLoading(true);
       const res = await getAllProblems();
-      // console.log(res);
       if (res && res.status === 200) {
-        // console.log("problem details is ",res.data);
-        setRow(res.data);
+        let filteredProblems = res.data;
+        // console.log("location",location.pathname);
+        if (location.pathname === "/practice") {
+          // console.log("if condition satisfied");
+          const now = new Date();
+          // console.log("current time: ",now);
+          filteredProblems = res.data.filter((row) => {
+            const updated_at = new Date(row.updated_at);
+            // console.log("updated date: ",updated_at);
+            const diffInMinutes = (now - updated_at) / 1000 / 60 / 60 / 24 /30; // Difference in minutes
+            // const diff = now - updated_at
+            // console.log("diff: ",diffInMinutes);
+            return diffInMinutes >= 2;
+            // return true
+          });
+        }
+
+        setRow(filteredProblems);
       }
-      // setLoading(false);
     };
+
     setLoading(true);
     getRow();
     setLoading(false);
-  }, [setLoading]);
+  }, [location.pathname, setLoading]);
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -49,21 +64,16 @@ const ProblemSet = ({ setLoading }) => {
       : rows.slice().sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
 
   const handleDelete = async (id) => {
-    // console.log('delete button is clicked',id);
     setLoading(true);
     const res = await DeleteProblem(id);
-    // console.log(res);
     if (!res.status) {
-      // setLoading(false);
       toast.error("Internal server error. Please Try after some time");
     } else if (res.status === 200) {
       toast.success(res.data.message);
       const updatedRows = rows.filter((row) => row._id !== id);
       setRow(updatedRows);
-      // setLoading(false);
     } else {
       toast.error("Internal Server Error");
-      // setLoading(false);
     }
     setLoading(false);
   };
@@ -75,12 +85,12 @@ const ProblemSet = ({ setLoading }) => {
       ) : (
         <>
           <div className="problemset">
-            <h2 style={{ paddingTop: "20px" }}>Your Learning Libararies </h2>
+            <h2 style={{ paddingTop: "20px" }}>Your Learning Libraries </h2>
             <div className="table">
               <TableContainer component={Paper}>
                 <Table size="small">
                   <TableHead style={{ backgroundColor: "#cccdcf" }}>
-                  <TableCell style={{ width: "15%" }} align="center">
+                    <TableCell style={{ width: "15%" }} align="center">
                       <TableSortLabel
                         active={orderBy === "date"}
                         direction={order}
@@ -95,9 +105,9 @@ const ProblemSet = ({ setLoading }) => {
                         direction={order}
                         onClick={() => handleRequestSort("date")}
                       >
-                        updated_at
+                        Updated_at
                       </TableSortLabel>
-                    </TableCell>                    
+                    </TableCell>
                     <TableCell style={{ width: "5%" }} align="center">
                       <TableSortLabel
                         active={orderBy === "problemId"}
@@ -117,7 +127,7 @@ const ProblemSet = ({ setLoading }) => {
                       </TableSortLabel>
                     </TableCell>
                     <TableCell style={{ width: "20%" }} align="center">
-                      Plateform
+                      Platform
                     </TableCell>
                     <TableCell style={{ width: "5%" }} align="center">
                       <TableSortLabel
@@ -137,7 +147,7 @@ const ProblemSet = ({ setLoading }) => {
                     {sortedRows.map((row) => (
                       <Problem
                         row={row}
-                        key={row.date}
+                        key={row._id}
                         handleDelete={handleDelete}
                         setLoading={setLoading}
                       />

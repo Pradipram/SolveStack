@@ -24,7 +24,7 @@ const ProtectedRoute = ({ user, children }) => {
     if (user !== null) {
       setIsUserLoaded(true);
     }
-    console.log("currentuser ", user);
+    // console.log("currentuser ", user);
   }, [user]);
 
   if (!isUserLoaded) {
@@ -88,6 +88,15 @@ function App() {
 
               <Route
                 path="/problemset"
+                element={
+                  <ProtectedRoute user={user}>
+                    <ProblemSet setLoading={setLoading} />
+                    {/* <Route path="/problemset" element={<ProblemSet/>}/> */}
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/practice"
                 element={
                   <ProtectedRoute user={user}>
                     <ProblemSet setLoading={setLoading} />
