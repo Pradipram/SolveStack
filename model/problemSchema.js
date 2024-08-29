@@ -4,7 +4,11 @@ const problemSchema = new mongoose.Schema({
   email: {
     type: String,
   },
-  date: {
+  created_at: {
+    type: Date,
+    default: Date.now(),
+  },
+  updated_at: {
     type: Date,
     default: Date.now(),
   },

@@ -78,7 +78,7 @@ export const UpdateProblem = async(req,res) =>{
         // console.log("coming in UpdateProblem");
         // console.log(req.body);
         // const res = Problem.findOneAndUpdate(req.body._d,{status:req.body.status});
-        const updatedProblem = await Problem.findByIdAndUpdate(req.body._id,{status:req.body.status},{new:true}).exec();
+        const updatedProblem = await Problem.findByIdAndUpdate(req.body._id,{status:req.body.status,updated_at: Date.now()},{new:true}).exec();
         res.status(200).json(updatedProblem);
     }catch(err){
         // console.log(err);

@@ -80,15 +80,24 @@ const ProblemSet = ({ setLoading }) => {
               <TableContainer component={Paper}>
                 <Table size="small">
                   <TableHead style={{ backgroundColor: "#cccdcf" }}>
+                  <TableCell style={{ width: "15%" }} align="center">
+                      <TableSortLabel
+                        active={orderBy === "date"}
+                        direction={order}
+                        onClick={() => handleRequestSort("date")}
+                      >
+                        Created_at
+                      </TableSortLabel>
+                    </TableCell>
                     <TableCell style={{ width: "15%" }} align="center">
                       <TableSortLabel
                         active={orderBy === "date"}
                         direction={order}
                         onClick={() => handleRequestSort("date")}
                       >
-                        Date
+                        updated_at
                       </TableSortLabel>
-                    </TableCell>
+                    </TableCell>                    
                     <TableCell style={{ width: "5%" }} align="center">
                       <TableSortLabel
                         active={orderBy === "problemId"}
