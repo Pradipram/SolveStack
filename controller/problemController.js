@@ -29,7 +29,7 @@ const handleError = (err) => {
 export const addproblem = async(req,res)=>{
     // console.log(req.body);
     try{
-        const problem = req.body;
+        let problem = req.body;
         let url = problem.url;
         let email = problem.email;
         let isProblemAlreadySaved = await Problem.findOne({email:email,url:url});
@@ -37,6 +37,10 @@ export const addproblem = async(req,res)=>{
             return res.status(409).json("This problem already saved");
         }
         else{
+            let created_at = Date.now();
+            let updated_at = Date.now();
+            problem.created_at = created_at;
+            problem.updated_at = updated_at;
             const newProblem = await new Problem(problem);
             // console.log('newProblem',newProblem);
             await newProblem.save();
