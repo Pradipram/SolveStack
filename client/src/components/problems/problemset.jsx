@@ -85,7 +85,7 @@ const ProblemSet = ({ setLoading }) => {
       ) : (
         <>
           <div className="problemset">
-            <h2 style={{ paddingTop: "20px" }}>Your Learning Libraries </h2>
+            <h2 style={{ paddingTop: "20px",color: "white" }}>Your Learning Libraries </h2>
             <div className="table">
               <TableContainer component={Paper}>
                 <Table size="small">

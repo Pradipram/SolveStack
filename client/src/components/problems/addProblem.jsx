@@ -162,6 +162,8 @@ const AddProblem = ({ setLoading }) => {
               <MenuItem value="codeforces">codeforces</MenuItem>
               <MenuItem value="Leetcode">Leetcode</MenuItem>
               <MenuItem value="GeekForGeeks">GeekForGeeks</MenuItem>
+              <MenuItem value="CodeStudio">CodeStudio</MenuItem>
+              <MenuItem value="TakeUForward">TakeUForward</MenuItem>
             </Select>
             <div className="error">{error.plateform}</div>
           </FormControl>
