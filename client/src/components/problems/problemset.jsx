@@ -27,19 +27,16 @@ const ProblemSet = ({ setLoading }) => {
       const res = await getAllProblems();
       if (res && res.status === 200) {
         let filteredProblems = res.data;
-        // console.log("location",location.pathname);
         if (location.pathname === "/practice") {
-          // console.log("if condition satisfied");
           const now = new Date();
-          // console.log("current time: ",now);
           filteredProblems = res.data.filter((row) => {
             const updated_at = new Date(row.updated_at);
-            // console.log("updated date: ",updated_at);
-            const diffInMinutes = (now - updated_at) / 1000 / 60 / 60 / 24 /30; // Difference in minutes
-            // const diff = now - updated_at
-            // console.log("diff: ",diffInMinutes);
+            if(isNaN(updated_at)){
+              return true;
+            }
+            const diffInMinutes = (now - updated_at) / 1000 / 60 / 60 / 24 /30; // Diffirence in months
+            // const diffInMinutes = now-updated_at;
             return diffInMinutes >= 2;
-            // return true
           });
         }
 

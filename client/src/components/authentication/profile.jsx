@@ -1,5 +1,5 @@
 //Libraries
-import React from "react";
+import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import { Avatar, Button, Checkbox } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -19,7 +19,7 @@ function UserProfileDrawer({
   setLogin,
 }) {
   const navigate = useNavigate();
-
+  const [isPractice,setIsPractice] = useState(false);
   const inputString = user; // Replace this with your string
   const words = inputString.split(" ");
   const formattedString = words
@@ -37,6 +37,17 @@ function UserProfileDrawer({
       alert("Something unepected happened.Please try again");
     }
   };
+
+  const Practicehandler = () =>{
+    setIsPractice(!isPractice);
+    if(isPractice){
+      navigate("/problemset");
+    }
+    else{
+      navigate("/practice");
+    }
+    onClose(false);
+  }
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
@@ -73,6 +84,13 @@ function UserProfileDrawer({
             <span>Hide Revisit problems</span>
           </div>
         </div>
+        <Button
+          variant="contained"
+          style={{ marginTop: 20 }}
+          onClick={Practicehandler}
+        >
+          {isPractice ? "problemset": "practice"}
+        </Button>
         <Button
           variant="outlined"
           endIcon={<LogoutIcon />}
