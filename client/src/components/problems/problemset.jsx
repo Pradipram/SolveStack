@@ -6,6 +6,7 @@ import {
   TableCell,
   TableBody,
   TableSortLabel,
+  TableRow,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
@@ -31,10 +32,10 @@ const ProblemSet = ({ setLoading }) => {
           const now = new Date();
           filteredProblems = res.data.filter((row) => {
             const updated_at = new Date(row.updated_at);
-            if(isNaN(updated_at)){
+            if (isNaN(updated_at)) {
               return true;
             }
-            const diffInMinutes = (now - updated_at) / 1000 / 60 / 60 / 24 /30; // Diffirence in months
+            const diffInMinutes = (now - updated_at) / 1000 / 60 / 60 / 24 / 30; // Diffirence in months
             // const diffInMinutes = now-updated_at;
             return diffInMinutes >= 2;
           });
@@ -82,63 +83,67 @@ const ProblemSet = ({ setLoading }) => {
       ) : (
         <>
           <div className="problemset">
-            <h2 style={{ paddingTop: "20px",color: "white" }}>Your Learning Libraries </h2>
+            <h2 style={{ paddingTop: "20px", color: "white" }}>
+              Your Learning Libraries{" "}
+            </h2>
             <div className="table">
               <TableContainer component={Paper}>
                 <Table size="small">
                   <TableHead style={{ backgroundColor: "#cccdcf" }}>
-                    <TableCell style={{ width: "15%" }} align="center">
-                      <TableSortLabel
-                        active={orderBy === "date"}
-                        direction={order}
-                        onClick={() => handleRequestSort("date")}
-                      >
-                        Created_at
-                      </TableSortLabel>
-                    </TableCell>
-                    <TableCell style={{ width: "15%" }} align="center">
-                      <TableSortLabel
-                        active={orderBy === "date"}
-                        direction={order}
-                        onClick={() => handleRequestSort("date")}
-                      >
-                        Updated_at
-                      </TableSortLabel>
-                    </TableCell>
-                    <TableCell style={{ width: "5%" }} align="center">
-                      <TableSortLabel
-                        active={orderBy === "problemId"}
-                        direction={order}
-                        onClick={() => handleRequestSort("problemId")}
-                      >
-                        ProblemId
-                      </TableSortLabel>
-                    </TableCell>
-                    <TableCell style={{ width: "65%" }} align="center">
-                      <TableSortLabel
-                        active={orderBy === "problemName"}
-                        direction={order}
-                        onClick={() => handleRequestSort("problemName")}
-                      >
-                        Problem Name
-                      </TableSortLabel>
-                    </TableCell>
-                    <TableCell style={{ width: "20%" }} align="center">
-                      Platform
-                    </TableCell>
-                    <TableCell style={{ width: "5%" }} align="center">
-                      <TableSortLabel
-                        active={orderBy === "rating"}
-                        direction={order}
-                        onClick={() => handleRequestSort("rating")}
-                      >
-                        Rating
-                      </TableSortLabel>
-                    </TableCell>
-                    <TableCell style={{ width: "20%" }} align="center">
-                      Status
-                    </TableCell>
-                    <TableCell>Action</TableCell>
+                    <TableRow>
+                      <TableCell style={{ width: "15%" }} align="center">
+                        <TableSortLabel
+                          active={orderBy === "date"}
+                          direction={order}
+                          onClick={() => handleRequestSort("date")}
+                        >
+                          Created_at
+                        </TableSortLabel>
+                      </TableCell>
+                      <TableCell style={{ width: "15%" }} align="center">
+                        <TableSortLabel
+                          active={orderBy === "date"}
+                          direction={order}
+                          onClick={() => handleRequestSort("date")}
+                        >
+                          Updated_at
+                        </TableSortLabel>
+                      </TableCell>
+                      <TableCell style={{ width: "5%" }} align="center">
+                        <TableSortLabel
+                          active={orderBy === "problemId"}
+                          direction={order}
+                          onClick={() => handleRequestSort("problemId")}
+                        >
+                          ProblemId
+                        </TableSortLabel>
+                      </TableCell>
+                      <TableCell style={{ width: "65%" }} align="center">
+                        <TableSortLabel
+                          active={orderBy === "problemName"}
+                          direction={order}
+                          onClick={() => handleRequestSort("problemName")}
+                        >
+                          Problem Name
+                        </TableSortLabel>
+                      </TableCell>
+                      <TableCell style={{ width: "20%" }} align="center">
+                        Platform
+                      </TableCell>
+                      <TableCell style={{ width: "5%" }} align="center">
+                        <TableSortLabel
+                          active={orderBy === "rating"}
+                          direction={order}
+                          onClick={() => handleRequestSort("rating")}
+                        >
+                          Rating
+                        </TableSortLabel>
+                      </TableCell>
+                      <TableCell style={{ width: "20%" }} align="center">
+                        Status
+                      </TableCell>
+                      <TableCell>Action</TableCell>
+                    </TableRow>
                   </TableHead>
                   <TableBody>
                     {sortedRows.map((row) => (

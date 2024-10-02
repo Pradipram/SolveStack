@@ -1,18 +1,21 @@
 import axios from "axios";
 
-export const addProblem = async (problem) => {
-  // console.log('problem',problem);
-  try {
-    const res = await axios.post(`/addproblem`, problem, {
-      withCredentials: true,
-    });
-    console.log(res);
-    return res;
-  } catch (err) {
-    console.log("error in addProblem", err);
-    return err;
-  }
-};
+// export const addProblem = async (problem) => {
+//   // console.log('problem',problem);
+//   try {
+//     const res = await axios.post(`/addproblem`, problem, {
+//       withCredentials: true,
+//     });
+//     // console.log(res);
+//     return res;
+//   } catch (err) {
+//     // console.log("error in addProblem", err);
+//     // return err;
+//     if(err.response.status === 409){
+//       toast.warning("Problem already saved");
+//     }
+//   }
+// };
 
 export const getAllProblems = async () => {
   try {

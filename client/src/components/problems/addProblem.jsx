@@ -8,9 +8,9 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 import "./problemset.css";
-import { addProblem } from "../../service/ProblemApi";
 import { useUserContext } from "../../context/userContext";
 
 const probleminit = {
@@ -71,15 +71,12 @@ const isError = (errors) => {
 };
 
 const AddProblem = ({ setLoading }) => {
-  // const [status,setStatus] = useState('Pending');
   const [problem, setProblem] = useState(probleminit);
   const { email } = useUserContext();
   const navigate = useNavigate();
   const [error, setError] = useState(errorinit);
 
   const handleSelectChange = (e) => {
-    // console.log(e.target);
-    // const newStatus = e.target.value;
     setError(errorinit);
     const key = e.target.name;
     const value = e.target.value;
@@ -87,33 +84,43 @@ const AddProblem = ({ setLoading }) => {
       ...prevProblem,
       [key]: value,
     }));
-    // console.log('new problem status is ', newStatus);
   };
 
   const handleAddProblem = async () => {
-    // console.log('add problem is clicked',problem);
-    setLoading(true);
-    const err = validateProblem(problem);
-    if (isError(err)) {
-      setError(err);
-      setLoading(false);
-    } else {
-      let newProblem = {
-        ...problem,
-        email: email,
-      };
-      const res = await addProblem(newProblem);
-      // console.log('res in handleAddProblem ',res);
-      if (res && res.status === 200) {
-        setLoading(false);
-        toast("Problem added successfully");
-        navigate("/problemset");
+    try{
+      const err = validateProblem(problem);
+      if (isError(err)) {
+        setError(err);
       } else {
+        let newProblem = {
+          ...problem,
+          email: email,
+        };
+        setLoading(true);
+        // const res = await addProblem(newProblem);
+        const res = await axios.post('/addproblem',newProblem,{
+          withCredentials: true
+        })
+        // console.log('res in handleAddProblem ',res);
         setLoading(false);
-        toast("Internal Server error");
+        if (res && res.status === 200) {
+          toast("Problem added successfully");
+          navigate("/problemset");
+        }else {
+          toast("Something went wrong");
+        }
       }
     }
-    setLoading(false);
+    catch(err){
+      setLoading(false);
+      if(err.response.status === 409){
+        toast.error("Problem already saved");
+      }
+      else{
+        toast.error("Internal server error! Report this problme");
+      }
+      // console.log(err);
+    }
   };
 
   const handleInputChange = (e) => {

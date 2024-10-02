@@ -8,8 +8,7 @@
     /* box-shadow: 0 0px 44px 0 rgb(0 0 0 / 100%); */
     box-shadow: rgba(255, 2, 2, 0.05) 0px 6px 24px 0px, rgba(255, 0, 0, 0.08) 0px 0px 0px 1px;
     background-color: rgb(99, 72, 101);
-    /* padding-bottom: 20px; */
-    /* height: 83vh; */
+    margin-bottom: 33px;
 }
 
 .table{
