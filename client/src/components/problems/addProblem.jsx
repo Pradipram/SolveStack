@@ -199,6 +199,7 @@ const AddProblem = ({ setLoading }) => {
                   name="level"
                 >
                   <MenuItem value="Select">Select</MenuItem>
+                  <MenuItem value="basic">Basic</MenuItem>
                   <MenuItem value="easy">Easy</MenuItem>
                   <MenuItem value="medium">Medium</MenuItem>
                   <MenuItem value="hard">Hard</MenuItem>
